@@ -45,7 +45,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     };
 
-    print!("DataFrame:\n{}", df);
+    println!("DataFrame:\n{}", df);
+
+    let null_count = df.null_count();
+
+    println!("\nNull counts:\n{}", null_count);
 
     Ok(())
 }
