@@ -27,7 +27,7 @@ async fn main() {
         weather::weather::fetch_weather_data(geocoding.latitude, geocoding.longitude).await;
 
     match weather {
-        Ok(data) => data.print_weather_info(),
+        Ok(weather) => weather.print_weather_info(),
         Err(e) => eprintln!("Error fetching weather data: {}", e),
     }
 }
