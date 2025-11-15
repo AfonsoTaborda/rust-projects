@@ -1,6 +1,7 @@
 {
     "rust.analyzer.linkedProjects": [
         "./data-science/Cargo.toml",
-        "./web.api/Cargo.toml"
+        "./web-api/Cargo.toml",
+        "./cli/Cargo.toml"
     ],
 }
