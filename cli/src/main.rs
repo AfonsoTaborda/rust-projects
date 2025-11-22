@@ -28,5 +28,5 @@ fn main() {
     match weather {
         Ok(weather) => weather.print_weather_info(),
         Err(e) => eprintln!("Error fetching weather data: {}", e),
-    }
+    };
 }
