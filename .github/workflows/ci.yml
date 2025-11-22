@@ -10,7 +10,7 @@ env:
 
 jobs:
   build:
-    name: Build
+    name: Build and Test
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -28,3 +28,6 @@ jobs:
       - name: Build Web API
         working-directory: ./web-api
         run: cargo build --verbose
+      - name: Test CLI
+        working-directory: ./cli
+        run: cargo test --verbose
