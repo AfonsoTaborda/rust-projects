@@ -17,6 +17,15 @@ pub async fn fetch_geocoding_data(name: &str, country: &str) -> Result<Geocoding
         "https://geocoding-api.open-meteo.com/v1/search?name={}&count=10&language=en&format=json&countryCode={}",
         name, country
     );
-    let response: GeocodingResponse = reqwest::get(&url).await?.json().await?;
-    Ok(response.results[0].clone())
+    let response = match reqwest::get(&url).await {
+        Err(e) => return Err(e),
+        Ok(resp) => resp,
+    };
+
+    let geocoding: GeocodingResponse = match response.json().await {
+        Err(e) => return Err(e),
+        Ok(data) => data,
+    };
+
+    Ok(geocoding.results[0].clone())
 }

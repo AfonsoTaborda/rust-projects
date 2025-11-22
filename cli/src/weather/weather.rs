@@ -26,6 +26,15 @@ pub async fn fetch_weather_data(latitude: f32, longitude: f32) -> Result<Weather
         "https://api.open-meteo.com/v1/forecast?latitude={}&longitude={}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m",
         latitude, longitude
     );
-    let weather: Weather = reqwest::get(&url).await?.json().await?;
+    let response = match reqwest::get(&url).await {
+        Err(e) => return Err(e),
+        Ok(data) => data,
+    };
+
+    let weather: Weather = match response.json().await {
+        Err(e) => return Err(e),
+        Ok(data) => data,
+    };
+
     Ok(weather)
 }

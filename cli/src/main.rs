@@ -14,9 +14,12 @@ struct Cli {
 async fn main() {
     let cli = Cli::parse();
 
-    let geocoding =
-        weather::geocoding::fetch_geocoding_data(&cli.country_name, &cli.country_code).await;
-    let geocoding = match geocoding {
+    let geocoding = match weather::geocoding::fetch_geocoding_data(
+        &cli.country_name,
+        &cli.country_code,
+    )
+    .await
+    {
         Ok(data) => data,
         Err(e) => {
             eprintln!("Error fetching geocoding data: {}", e);
@@ -24,7 +27,10 @@ async fn main() {
         }
     };
     let weather =
-        weather::weather::fetch_weather_data(geocoding.latitude, geocoding.longitude).await;
+        match weather::weather::fetch_weather_data(geocoding.latitude, geocoding.longitude).await {
+            Ok(data) => Ok(data),
+            Err(e) => Err(e),
+        };
 
     match weather {
         Ok(weather) => weather.print_weather_info(),
