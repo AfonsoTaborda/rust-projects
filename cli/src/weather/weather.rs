@@ -38,3 +38,14 @@ pub fn fetch_weather_data(latitude: f32, longitude: f32) -> Result<Weather, Erro
 
     Ok(weather)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_fetch_weather_data() {
+        let result = fetch_weather_data(52.52, 13.405);
+        assert!(result.is_ok());
+    }
+}

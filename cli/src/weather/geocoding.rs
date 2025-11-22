@@ -29,3 +29,14 @@ pub fn fetch_geocoding_data(name: &str, country: &str) -> Result<GeocodingResult
 
     Ok(geocoding.results[0].clone())
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_fetch_geocoding_data() {
+        let result = fetch_geocoding_data("Berlin", "DE");
+        assert!(result.is_ok());
+    }
+}
