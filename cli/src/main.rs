@@ -16,11 +16,9 @@ fn main() {
     let geocoding =
         match weather::geocoding::fetch_geocoding_data(&cli.country_name, &cli.country_code) {
             Ok(data) => data,
-            Err(e) => {
-                eprintln!("Error fetching geocoding data: {}", e);
-                return;
-            }
+            Err(e) => panic!("Error fetching geocoding data: {}", e),
         };
+
     let weather =
         match weather::weather::fetch_weather_data(geocoding.latitude, geocoding.longitude) {
             Ok(data) => Ok(data),
