@@ -21,17 +21,17 @@ impl Weather {
     }
 }
 
-pub async fn fetch_weather_data(latitude: f32, longitude: f32) -> Result<Weather, Error> {
+pub fn fetch_weather_data(latitude: f32, longitude: f32) -> Result<Weather, Error> {
     let url = format!(
         "https://api.open-meteo.com/v1/forecast?latitude={}&longitude={}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m",
         latitude, longitude
     );
-    let response = match reqwest::get(&url).await {
+    let response = match reqwest::blocking::get(&url) {
         Err(e) => return Err(e),
         Ok(data) => data,
     };
 
-    let weather: Weather = match response.json().await {
+    let weather: Weather = match response.json() {
         Err(e) => return Err(e),
         Ok(data) => data,
     };

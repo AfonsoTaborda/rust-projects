@@ -10,24 +10,19 @@ struct Cli {
     country_code: String,
 }
 
-#[tokio::main]
-async fn main() {
+fn main() {
     let cli = Cli::parse();
 
-    let geocoding = match weather::geocoding::fetch_geocoding_data(
-        &cli.country_name,
-        &cli.country_code,
-    )
-    .await
-    {
-        Ok(data) => data,
-        Err(e) => {
-            eprintln!("Error fetching geocoding data: {}", e);
-            return;
-        }
-    };
+    let geocoding =
+        match weather::geocoding::fetch_geocoding_data(&cli.country_name, &cli.country_code) {
+            Ok(data) => data,
+            Err(e) => {
+                eprintln!("Error fetching geocoding data: {}", e);
+                return;
+            }
+        };
     let weather =
-        match weather::weather::fetch_weather_data(geocoding.latitude, geocoding.longitude).await {
+        match weather::weather::fetch_weather_data(geocoding.latitude, geocoding.longitude) {
             Ok(data) => Ok(data),
             Err(e) => Err(e),
         };
